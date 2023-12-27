@@ -2,7 +2,8 @@
 Gobinet is the simplest personal knowledge base. It recursively generates PDF
 files to a destination directory from an input directory of LaTeX source files.
 It will generate twice when the source uses BibTeX (in which case it also
-generates bibliography) or has a table of contents.
+generates bibliography) or has a table of contents. It ignores up-to-date
+files.
 
 ## Instalation
 ```
