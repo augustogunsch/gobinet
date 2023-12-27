@@ -6,7 +6,7 @@ generates bibliography) or has a table of contents.
 
 ## Instalation
 ```
-go install github.com/augustogunsch/gobinet@v1.0.0
+go install github.com/augustogunsch/gobinet@v1.0.2
 ```
 
 ## Requirements
