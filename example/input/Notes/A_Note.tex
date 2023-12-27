@@ -1,0 +1,22 @@
+\documentclass{note}
+
+\usepackage[outputdir=\outdir]{minted}
+
+\usemintedstyle{autumn}
+
+\begin{document}
+\noteheader{\breadcrumbs}
+
+\section{Example note}
+This is an example note.
+\begin{minted}{go}
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, world!")
+}
+\end{minted}
+
+\end{document}
