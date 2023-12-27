@@ -6,7 +6,7 @@ generates bibliography) or has a table of contents.
 
 ## Instalation
 ```
-go install github.com/augustogunsch/gobinet
+go install github.com/augustogunsch/gobinet@v1.0.0
 ```
 
 ## Requirements
@@ -14,7 +14,7 @@ Python-Pygments and Xelatex.
 
 ## Macros
 These get expanded when processing the source files.
- - `\outdir`: Output directory.
+ - `\outdir`: File's output directory.
  - `\breadcrumbs`: Pretty ">"-separated path to file.
  - `\slashcrumbs`: Slash separated path to file.
 
