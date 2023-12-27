@@ -1,4 +1,4 @@
-module gobinet
+module github.com/augustogunsch/gobinet
 
 go 1.21.5
 
