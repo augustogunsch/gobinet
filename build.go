@@ -202,7 +202,7 @@ func getProcessingFiles(inputDir, outputDir string) []processingFile {
 	var sourceFiles []string
 
 	filepath.WalkDir(inputDir, func(p string, d fs.DirEntry, err error) error {
-		if !d.IsDir() && path.Ext(p) == ".tex" {
+		if !d.IsDir() && path.Ext(p) == ".tex" && []rune(path.Base(p))[0] != '_' {
 			sourceFiles = append(sourceFiles, p)
 		}
 		return nil

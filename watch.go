@@ -55,7 +55,7 @@ func dedupLoop(args ArgSet, watcher *fsnotify.Watcher) {
 				continue
 			}
 
-			if path.Ext(e.Name) != ".tex" {
+			if path.Ext(e.Name) != ".tex" || []rune(path.Base(e.Name))[0] == '_' {
 				continue
 			}
 
