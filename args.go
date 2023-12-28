@@ -22,7 +22,6 @@ func (dirs *IncludeDirs) Set(value string) error {
 }
 
 type ArgSet struct {
-	Help    bool
 	Include IncludeDirs
 	Reload  bool
 	Notify  bool
@@ -34,7 +33,7 @@ type ArgSet struct {
 func usage(stream io.Writer, exitCode int) {
 	program := path.Base(os.Args[0])
 	stream.Write([]byte(fmt.Sprintf(
-		"usage: %s [--help] [--include DIR] [--reload] [--notify] <build|watch> INPUT OUTPUT\n",
+		"usage: %s [--help] [--version] [--include DIR] [--reload] [--notify] <build|watch> INPUT OUTPUT\n",
 		program,
 	)))
 	flag.CommandLine.SetOutput(stream)
@@ -43,13 +42,22 @@ func usage(stream io.Writer, exitCode int) {
 }
 
 func parseArgs() ArgSet {
-	args := ArgSet{}
+	var (
+		args          = ArgSet{}
+		help, version bool
+	)
 
 	flag.BoolVar(
-		&args.Help,
+		&help,
 		"help",
 		false,
 		"Show this help message and exit.",
+	)
+	flag.BoolVar(
+		&version,
+		"version",
+		false,
+		"Show Gobinet version.",
 	)
 	flag.BoolVar(
 		&args.Reload,
@@ -71,8 +79,13 @@ func parseArgs() ArgSet {
 
 	flag.Parse()
 
-	if args.Help {
+	if help {
 		usage(os.Stderr, 0)
+	}
+
+	if version {
+		fmt.Printf("Gobinet %s\n", VERSION)
+		os.Exit(0)
 	}
 
 	posArgs := flag.Args()

@@ -7,7 +7,7 @@ files and files starting with and underscore (`_`).
 
 ## Instalation
 ```
-go install github.com/augustogunsch/gobinet@v1.0.3
+go install github.com/augustogunsch/gobinet@v1.1.0
 ```
 
 ## Requirements
@@ -22,13 +22,15 @@ These get expanded when processing the source files.
 ## Usage
 For a concrete example, please look under `example/`.
 ```
-usage: gobinet [--help] [--include DIR] [--reload] [--notify] <build|watch> INPUT OUTPUT
+usage: gobinet [--help] [--version] [--include DIR] [--reload] [--notify] <build|watch> INPUT OUTPUT
   -help
-        Show this help message and exit.
+    	Show this help message and exit.
   -include value
-        Include this directory. May be passed multiple times.
+    	Include this directory. May be passed multiple times.
   -notify
-        Send a desktop notification when compilation fails.
+    	Send a desktop notification when compilation fails.
   -reload
-        Reload MuPDF by sending a HUP signal when files are updated.
+    	Reload MuPDF by sending a HUP signal when files are updated.
+  -version
+    	Show Gobinet version.
 ```

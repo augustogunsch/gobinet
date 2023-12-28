@@ -5,6 +5,8 @@ import (
 	"os"
 )
 
+const VERSION = "v1.1.0"
+
 func main() {
 	args := parseArgs()
 
