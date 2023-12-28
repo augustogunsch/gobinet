@@ -11,7 +11,7 @@ go install github.com/augustogunsch/gobinet@v1.0.2
 ```
 
 ## Requirements
-Python-Pygments and Xelatex.
+A standard LaTeX installation with `xelatex`.
 
 ## Macros
 These get expanded when processing the source files.
