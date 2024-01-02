@@ -18,16 +18,6 @@ type Notify interface {
 	Notify(*log.Logger, string)
 }
 
-type Notifier struct{}
-
-func (n *Notifier) Notify(l *log.Logger, msg string) {
-	cmd := exec.Command("notify-send", "Gobinet error", msg)
-	if output, err := cmd.CombinedOutput(); err != nil {
-		l.Printf("error sending notification:\n%s", output)
-		return
-	}
-}
-
 type Context struct {
 	N    Notify
 	L    *log.Logger

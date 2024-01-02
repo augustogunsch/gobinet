@@ -7,7 +7,7 @@ files and files starting with and underscore (`_`).
 
 ## Instalation
 ```
-go install github.com/augustogunsch/gobinet@v1.1.0
+go install github.com/augustogunsch/gobinet@v1.1.1
 ```
 
 ## Requirements
