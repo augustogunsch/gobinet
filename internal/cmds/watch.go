@@ -13,7 +13,7 @@ import (
 )
 
 func handleUpdate(ctx context.Context, inputName string) {
-	log.Printf("source `%s` updated", inputName)
+	ctx.L.Printf("source `%s` updated", inputName)
 	f := logic.NewProcessingFile(ctx.Args, inputName)
 	f.Generate(ctx)
 }
@@ -84,7 +84,7 @@ func dedupLoop(ctx context.Context, watcher *fsnotify.Watcher) {
 				return
 			}
 
-			log.Println("watcher error:", err)
+			ctx.L.Println("watcher error:", err)
 		}
 	}
 }
