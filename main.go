@@ -2,26 +2,14 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
-	"os/exec"
 
 	"github.com/augustogunsch/gobinet/internal/args"
 	"github.com/augustogunsch/gobinet/internal/cmds"
-	"github.com/augustogunsch/gobinet/internal/logic"
+	"github.com/augustogunsch/gobinet/internal/context"
 )
 
-type notifier struct{}
-
-func (n *notifier) Notify(l *log.Logger, msg string) {
-	cmd := exec.Command("notify-send", "Gobinet error", msg)
-	if output, err := cmd.CombinedOutput(); err != nil {
-		l.Printf("error sending notification:\n%s", output)
-		return
-	}
-}
-
-const VERSION = "v1.1.1"
+const VERSION = "v1.1.2"
 
 func main() {
 	parsedArgs, err := args.ParseArgs()
@@ -42,11 +30,7 @@ func main() {
 		return
 	}
 
-	ctx := logic.Context{
-		N:    &notifier{},
-		L:    log.Default(),
-		Args: &parsedArgs,
-	}
+	ctx := context.DefaultWithArgs(&parsedArgs)
 
 	switch parsedArgs.Cmd {
 	case "build":

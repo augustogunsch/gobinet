@@ -7,17 +7,18 @@ import (
 	"sync"
 	"time"
 
+	"github.com/augustogunsch/gobinet/internal/context"
 	"github.com/augustogunsch/gobinet/internal/logic"
 	"github.com/fsnotify/fsnotify"
 )
 
-func handleUpdate(ctx logic.Context, inputName string) {
+func handleUpdate(ctx context.Context, inputName string) {
 	log.Printf("source `%s` updated", inputName)
 	f := logic.NewProcessingFile(ctx.Args, inputName)
 	f.Generate(ctx)
 }
 
-func Watch(ctx logic.Context) {
+func Watch(ctx context.Context) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		ctx.L.Fatal(err)
@@ -37,7 +38,7 @@ func Watch(ctx logic.Context) {
 	dedupLoop(ctx, watcher)
 }
 
-func dedupLoop(ctx logic.Context, watcher *fsnotify.Watcher) {
+func dedupLoop(ctx context.Context, watcher *fsnotify.Watcher) {
 	const waitFor = 50 * time.Millisecond
 	var (
 		mu     sync.Mutex

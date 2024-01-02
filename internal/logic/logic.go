@@ -3,7 +3,6 @@ package logic
 import (
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"os/exec"
 	"path"
@@ -12,17 +11,8 @@ import (
 	"strings"
 
 	"github.com/augustogunsch/gobinet/internal/args"
+	"github.com/augustogunsch/gobinet/internal/context"
 )
-
-type Notify interface {
-	Notify(*log.Logger, string)
-}
-
-type Context struct {
-	N    Notify
-	L    *log.Logger
-	Args *args.ArgSet
-}
 
 type ProcessingFile struct {
 	Input      string
@@ -102,7 +92,7 @@ func (file *ProcessingFile) runXelatex(include args.IncludeDirs) (output []byte,
 	return
 }
 
-func (file *ProcessingFile) Generate(ctx Context) (success bool) {
+func (file *ProcessingFile) Generate(ctx context.Context) (success bool) {
 	ctx.L.Printf("processing `%s`\n", file.Input)
 
 	if err := file.readInput(); err != nil {

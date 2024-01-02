@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/augustogunsch/gobinet/internal/args"
+	"github.com/augustogunsch/gobinet/internal/context"
 	"github.com/augustogunsch/gobinet/internal/logic"
 )
 
@@ -59,7 +60,7 @@ func getOutdatedFiles(args *args.ArgSet) ([]logic.ProcessingFile, error) {
 	return files, nil
 }
 
-func Build(ctx logic.Context) {
+func Build(ctx context.Context) {
 	var (
 		wg    sync.WaitGroup
 		files []logic.ProcessingFile
