@@ -24,7 +24,10 @@ func Watch(ctx context.Context) {
 	}
 	defer watcher.Close()
 
-	err = filepath.WalkDir(ctx.Args.Input, func(path string, d fs.DirEntry, _ error) error {
+	err = filepath.WalkDir(ctx.Args.Input, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
 		if d.IsDir() {
 			return watcher.Add(path)
 		}

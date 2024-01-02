@@ -29,6 +29,9 @@ func getOutdatedFiles(args *args.ArgSet) ([]logic.ProcessingFile, error) {
 	var sourceFiles []string
 
 	err := filepath.WalkDir(args.Input, func(p string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
 		if !d.IsDir() && logic.IsSourceFile(p) {
 			sourceFiles = append(sourceFiles, p)
 		}
