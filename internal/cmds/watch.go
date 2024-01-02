@@ -2,7 +2,6 @@ package cmds
 
 import (
 	"io/fs"
-	"log"
 	"path/filepath"
 	"sync"
 	"time"

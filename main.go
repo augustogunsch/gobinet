@@ -9,7 +9,7 @@ import (
 	"github.com/augustogunsch/gobinet/internal/context"
 )
 
-const VERSION = "v1.1.2"
+const VERSION = "v1.1.4"
 
 func main() {
 	parsedArgs, err := args.ParseArgs()
