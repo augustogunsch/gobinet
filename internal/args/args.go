@@ -1,6 +1,7 @@
-package main
+package args
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -28,9 +29,11 @@ type ArgSet struct {
 	Cmd     string
 	Input   string
 	Output  string
+	Version bool
+	Help    bool
 }
 
-func usage(stream io.Writer, exitCode int) {
+func WriteUsage(stream io.Writer) {
 	program := path.Base(os.Args[0])
 	stream.Write([]byte(fmt.Sprintf(
 		"usage: %s [--help] [--version] [--include DIR] [--reload] [--notify] <build|watch> INPUT OUTPUT\n",
@@ -38,26 +41,22 @@ func usage(stream io.Writer, exitCode int) {
 	)))
 	flag.CommandLine.SetOutput(stream)
 	flag.PrintDefaults()
-	os.Exit(exitCode)
 }
 
-func parseArgs() ArgSet {
-	var (
-		args          = ArgSet{}
-		help, version bool
-	)
+func ParseArgs() (ArgSet, error) {
+	args := ArgSet{}
 
 	flag.BoolVar(
-		&help,
+		&args.Help,
 		"help",
 		false,
 		"Show this help message and exit.",
 	)
 	flag.BoolVar(
-		&version,
+		&args.Version,
 		"version",
 		false,
-		"Show Gobinet version.",
+		"Show Gobinet's version.",
 	)
 	flag.BoolVar(
 		&args.Reload,
@@ -79,24 +78,19 @@ func parseArgs() ArgSet {
 
 	flag.Parse()
 
-	if help {
-		usage(os.Stderr, 0)
-	}
-
-	if version {
-		fmt.Printf("Gobinet %s\n", VERSION)
-		os.Exit(0)
+	if args.Help || args.Version {
+		return args, nil
 	}
 
 	posArgs := flag.Args()
 
 	if len(posArgs) != 3 {
-		usage(os.Stderr, 1)
+		return args, errors.New("expected three positional arguments")
 	}
 
 	args.Cmd = posArgs[0]
 	args.Input = filepath.Clean(posArgs[1])
 	args.Output = filepath.Clean(posArgs[2])
 
-	return args
+	return args, nil
 }

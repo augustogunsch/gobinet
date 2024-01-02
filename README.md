@@ -32,5 +32,5 @@ usage: gobinet [--help] [--version] [--include DIR] [--reload] [--notify] <build
   -reload
     	Reload MuPDF by sending a HUP signal when files are updated.
   -version
-    	Show Gobinet version.
+    	Show Gobinet's version.
 ```

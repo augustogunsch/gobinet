@@ -1,43 +1,43 @@
-package main
+package cmds
 
 import (
 	"io/fs"
 	"log"
-	"path"
 	"path/filepath"
 	"sync"
 	"time"
 
+	"github.com/augustogunsch/gobinet/internal/logic"
 	"github.com/fsnotify/fsnotify"
 )
 
-func processUpdate(inputName string, args ArgSet) {
+func handleUpdate(ctx logic.Context, inputName string) {
 	log.Printf("source `%s` updated", inputName)
-	f := newProcessingFile(inputName, args.Input, args.Output)
-	f.generate(args)
+	f := logic.NewProcessingFile(ctx.Args, inputName)
+	f.Generate(ctx)
 }
 
-func watch(args ArgSet) {
+func Watch(ctx logic.Context) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
-		log.Fatal(err)
+		ctx.L.Fatal(err)
 	}
 	defer watcher.Close()
 
-	err = filepath.WalkDir(args.Input, func(path string, d fs.DirEntry, _ error) error {
+	err = filepath.WalkDir(ctx.Args.Input, func(path string, d fs.DirEntry, _ error) error {
 		if d.IsDir() {
 			return watcher.Add(path)
 		}
 		return nil
 	})
 	if err != nil {
-		log.Fatal(err)
+		ctx.L.Fatal(err)
 	}
 
-	dedupLoop(args, watcher)
+	dedupLoop(ctx, watcher)
 }
 
-func dedupLoop(args ArgSet, watcher *fsnotify.Watcher) {
+func dedupLoop(ctx logic.Context, watcher *fsnotify.Watcher) {
 	const waitFor = 50 * time.Millisecond
 	var (
 		mu     sync.Mutex
@@ -55,7 +55,7 @@ func dedupLoop(args ArgSet, watcher *fsnotify.Watcher) {
 				continue
 			}
 
-			if path.Ext(e.Name) != ".tex" || []rune(path.Base(e.Name))[0] == '_' {
+			if !logic.IsSourceFile(e.Name) {
 				continue
 			}
 
@@ -69,7 +69,7 @@ func dedupLoop(args ArgSet, watcher *fsnotify.Watcher) {
 					delete(timers, e.Name)
 					mu.Unlock()
 
-					processUpdate(e.Name, args)
+					handleUpdate(ctx, e.Name)
 				})
 
 				mu.Lock()
