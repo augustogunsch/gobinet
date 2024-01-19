@@ -40,9 +40,10 @@ func (file *ProcessingFile) readInput() error {
 func (file *ProcessingFile) expandMacros() {
 	prettyPath := strings.ReplaceAll(file.basePath, "_", " ")
 	breadcrumbs := strings.ReplaceAll(prettyPath, "/", ` \textgreater\hspace{1pt} `)
-	file.content = strings.ReplaceAll(file.content, `\breadcrumbs`, breadcrumbs)
-	file.content = strings.ReplaceAll(file.content, `\slashcrumbs`, prettyPath)
-	file.content = strings.ReplaceAll(file.content, `\outdir`, path.Dir(file.Output))
+	file.content = strings.ReplaceAll(file.content, `$GOBINET_BREADCRUMBS$`, breadcrumbs)
+	file.content = strings.ReplaceAll(file.content, `$GOBINET_SLASHCRUMBS$`, prettyPath)
+	file.content = strings.ReplaceAll(file.content, `$GOBINET_INPUT_DIR$`, path.Dir(file.Input))
+	file.content = strings.ReplaceAll(file.content, `$GOBINET_OUTPUT_DIR$`, path.Dir(file.Output))
 }
 
 func (file *ProcessingFile) runBiber() (output []byte, err error) {

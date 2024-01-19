@@ -7,7 +7,7 @@ files and files starting with and underscore (`_`).
 
 ## Instalation
 ```
-go install github.com/augustogunsch/gobinet@v1.1.4
+go install github.com/augustogunsch/gobinet@v1.2.0
 ```
 
 ## Requirements
@@ -15,9 +15,10 @@ A standard LaTeX installation with `xelatex`.
 
 ## Macros
 These get expanded when processing the source files.
- - `\outdir`: File's output directory.
- - `\breadcrumbs`: Pretty ">"-separated path to file.
- - `\slashcrumbs`: Slash separated path to file.
+ - `$GOBINET_INPUT_DIR$`: File's input directory.
+ - `$GOBINET_OUTPUT_DIR$`: File's output directory.
+ - `$GOBINET_BREADCRUMBS$`: Pretty ">"-separated path to file.
+ - `$GOBINET_SLASHCRUMBS$`: Slash separated path to file.
 
 ## Usage
 For a concrete example, please look under `example/`.
